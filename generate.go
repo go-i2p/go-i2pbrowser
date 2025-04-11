@@ -27,7 +27,6 @@ func validVersion(name string) bool {
 	return false
 }
 
-
 func profileVersion() string {
 	client := github.NewClient(nil)
 	tags, _, err := client.Repositories.ListTags(context.Background(), owner, repo, nil)
@@ -40,7 +39,7 @@ func profileVersion() string {
 			if validVersion(*tag.Name) {
 				latestTag := tag
 				fmt.Printf("Latest tag '%s', (SHA-1: %s)\n", *latestTag.Name, *latestTag.Commit.SHA)
-				return *latestTag.Name	
+				return *latestTag.Name
 			}
 		}
 	} else {

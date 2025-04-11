@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	goi2pbrowser "github.com/eyedeekay/go-i2pbrowser"
+	goi2pbrowser "github.com/go-i2p/go-i2pbrowser"
 )
 
 var (

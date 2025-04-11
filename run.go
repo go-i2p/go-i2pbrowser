@@ -7,7 +7,7 @@ package goi2pbrowser
 import (
 	"log"
 
-	fcw "github.com/eyedeekay/go-fpw"
+	fcw "github.com/go-wbg/go-fpw"
 )
 
 // BrowseStrict launches a Firefox browser configured to use I2P and waits for it to exit.
