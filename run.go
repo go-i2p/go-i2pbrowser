@@ -58,7 +58,7 @@ func BrowseApp(profileDir string, url ...string) {
 		log.Println(err)
 		return
 	}
-	FIREFOX, ERROR := fcw.WebAppFirefox(profilePath, false, url...)
+	FIREFOX, ERROR := fcw.WebAppFirefox(profilePath, false, true, url...)
 	if ERROR != nil {
 		log.Println(ERROR)
 		return
