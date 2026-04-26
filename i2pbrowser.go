@@ -1,6 +1,7 @@
 package goi2pbrowser
 
 import (
+	"fmt"
 	"log"
 	"net"
 
@@ -15,8 +16,12 @@ type I2PBrowser struct {
 }
 
 func (i *I2PBrowser) Start() error {
+	// guard against a nil tunnel; returning an error is safer than panicking
+	if i.Tunnel == nil {
+		return fmt.Errorf("i2pbrowser: tunnel is not initialized")
+	}
 	// only start the tunnel if it is not already running
-	if i.Tunnel != nil && i.Tunnel.IsRunning() {
+	if i.Tunnel.IsRunning() {
 		return nil
 	}
 	// also check for a listener on the tunnels configured port before starting the tunnel
@@ -63,7 +68,7 @@ func NewI2PBrowser(profileDir string) (*I2PBrowser, error) {
 
 	t, err := embedding.Wrap(rawTunnel,
 		embedding.WithSAMAddr(samAddr),
-		embedding.WithMetricsAddr(":9090"),
+		embedding.WithMetricsAddr("127.0.0.1:9090"),
 	)
 	if err != nil {
 		return nil, err
