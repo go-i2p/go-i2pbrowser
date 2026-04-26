@@ -11,8 +11,10 @@ func BrowseStrict(profileDir string, url ...string) error {
 	if err != nil {
 		return err
 	}
-	i2pBrowser.BrowseStrict(url...)
-	i2pBrowser.Stop()
+	defer i2pBrowser.Stop()
+	if err := i2pBrowser.BrowseStrict(url...); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -23,8 +25,10 @@ func BrowseUsability(profileDir string, url ...string) error {
 	if err != nil {
 		return err
 	}
-	i2pBrowser.BrowseUsability(url...)
-	i2pBrowser.Stop()
+	defer i2pBrowser.Stop()
+	if err := i2pBrowser.BrowseUsability(url...); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -35,7 +39,9 @@ func BrowseApp(profileDir string, url ...string) error {
 	if err != nil {
 		return err
 	}
-	i2pBrowser.BrowseApp(url...)
-	i2pBrowser.Stop()
+	defer i2pBrowser.Stop()
+	if err := i2pBrowser.BrowseApp(url...); err != nil {
+		return err
+	}
 	return nil
 }
