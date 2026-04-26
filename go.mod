@@ -4,7 +4,7 @@ go 1.26.1
 
 require (
 	github.com/artdarek/go-unzip v1.0.0
-	github.com/go-i2p/go-i2ptunnel v0.0.0-20260426022245-ac75ce2d80eb
+	github.com/go-i2p/go-i2ptunnel v0.0.0-20260426030428-a5b606e683a8
 	github.com/go-i2p/go-i2ptunnel-config v0.0.0-20260323225449-a653898aac22
 	github.com/go-wbg/go-fpw v0.0.9
 	github.com/google/go-github v17.0.0+incompatible

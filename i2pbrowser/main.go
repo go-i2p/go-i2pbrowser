@@ -31,28 +31,24 @@ func defaultDir() string {
 	return ret
 }
 
+func browse(profileDir, url string) error {
+	switch {
+	case *a:
+		return goi2pbrowser.BrowseApp(profileDir, url)
+	case *u:
+		return goi2pbrowser.BrowseUsability(profileDir, url)
+	default:
+		return goi2pbrowser.BrowseStrict(profileDir, url)
+	}
+}
+
 func main() {
 	flag.Parse()
 	url := "http://127.0.0.1:7657"
 	if len(flag.Args()) > 0 {
 		url = flag.Arg(0)
 	}
-	application := *a
-	if application {
-		if err := goi2pbrowser.BrowseApp(*d, url); err != nil {
-			log.Fatal(err)
-		}
-		return
-	}
-	usability := *u
-	var err error
-	switch usability {
-	case true:
-		err = goi2pbrowser.BrowseUsability(*d, url)
-	default:
-		err = goi2pbrowser.BrowseStrict(*d, url)
-	}
-	if err != nil {
+	if err := browse(*d, url); err != nil {
 		log.Fatal(err)
 	}
 }

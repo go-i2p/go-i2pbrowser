@@ -11,6 +11,18 @@ type I2PBrowser struct {
 	*embedding.Tunnel
 }
 
+func (i *I2PBrowser) Stop() error {
+	// only stop the tunnel if the tunnel is running
+	if i.Tunnel != nil {
+		// check if the tunnel is running before stopping it
+		if i.Tunnel.IsRunning() {
+			return i.Tunnel.Stop()
+		}
+		return i.Tunnel.Stop()
+	}
+	return nil
+}
+
 func NewI2PBrowser(profileDir string) (*I2PBrowser, error) {
 	const samAddr = "127.0.0.1:7656"
 
