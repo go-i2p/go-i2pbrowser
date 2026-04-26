@@ -38,6 +38,9 @@ func UnpackBase(profileDir string) (string, error) {
 	if err := os.MkdirAll(filepath.Dir(profileDir), 0o755); err != nil {
 		return profilePath, err
 	}
+	if err := os.MkdirAll(profileDir, 0o755); err != nil {
+		return profilePath, err
+	}
 	zipFile := filepath.Join(filepath.Dir(profileDir), "i2p.firefox.base.profile.zip")
 	err := os.WriteFile(zipFile, BaseProfile, 0o644)
 	if err != nil {
@@ -64,6 +67,9 @@ func UnpackUsability(profileDir string) (string, error) {
 		return profilePath, nil
 	}
 	if err := os.MkdirAll(filepath.Dir(profileDir), 0o755); err != nil {
+		return profilePath, err
+	}
+	if err := os.MkdirAll(profileDir, 0o755); err != nil {
 		return profilePath, err
 	}
 	zipFile := filepath.Join(filepath.Dir(profileDir), "i2p.firefox.usability.profile.zip")

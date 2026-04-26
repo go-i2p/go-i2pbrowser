@@ -65,15 +65,18 @@ func DownloadURL(version, mode string) string {
 func DownloadFile(URL, output string) (string, error) {
 	wd, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 	filePath := filepath.Join(wd, output)
 	log.Println("Downloading:", URL, "to", filePath)
-	resp, err := http.Get(URL)
+	resp, err := http.Get(URL) //nolint:noctx
 	if err != nil {
 		return filePath, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return filePath, fmt.Errorf("HTTP GET %s: unexpected status %s", URL, resp.Status)
+	}
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return filePath, err

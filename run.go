@@ -4,6 +4,8 @@
 // i2p.plugins.firefox for use in native applications.
 package goi2pbrowser
 
+import "log"
+
 // BrowseStrict launches a Firefox browser configured to use I2P and waits for it to exit.
 // The profile is in "Strict" mode
 func BrowseStrict(profileDir string, url ...string) error {
@@ -11,7 +13,11 @@ func BrowseStrict(profileDir string, url ...string) error {
 	if err != nil {
 		return err
 	}
-	defer i2pBrowser.Stop()
+	defer func() {
+		if stopErr := i2pBrowser.Stop(); stopErr != nil {
+			log.Printf("WARNING: failed to stop I2P tunnel: %v", stopErr)
+		}
+	}()
 	if err := i2pBrowser.BrowseStrict(url...); err != nil {
 		return err
 	}
@@ -25,7 +31,11 @@ func BrowseUsability(profileDir string, url ...string) error {
 	if err != nil {
 		return err
 	}
-	defer i2pBrowser.Stop()
+	defer func() {
+		if stopErr := i2pBrowser.Stop(); stopErr != nil {
+			log.Printf("WARNING: failed to stop I2P tunnel: %v", stopErr)
+		}
+	}()
 	if err := i2pBrowser.BrowseUsability(url...); err != nil {
 		return err
 	}
@@ -39,7 +49,11 @@ func BrowseApp(profileDir string, url ...string) error {
 	if err != nil {
 		return err
 	}
-	defer i2pBrowser.Stop()
+	defer func() {
+		if stopErr := i2pBrowser.Stop(); stopErr != nil {
+			log.Printf("WARNING: failed to stop I2P tunnel: %v", stopErr)
+		}
+	}()
 	if err := i2pBrowser.BrowseApp(url...); err != nil {
 		return err
 	}
