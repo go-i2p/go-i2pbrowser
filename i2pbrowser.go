@@ -33,5 +33,10 @@ func NewI2PBrowser(profileDir string) (*I2PBrowser, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &I2PBrowser{ProfileDir: profileDir, Tunnel: t}, nil
+	ibb := &I2PBrowser{ProfileDir: profileDir, Tunnel: t}
+	err = ibb.Start()
+	if err != nil {
+		return nil, err
+	}
+	return ibb, nil
 }

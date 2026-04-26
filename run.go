@@ -12,6 +12,7 @@ func BrowseStrict(profileDir string, url ...string) error {
 		return err
 	}
 	i2pBrowser.BrowseStrict(url...)
+	i2pBrowser.Stop()
 	return nil
 }
 
@@ -23,6 +24,7 @@ func BrowseUsability(profileDir string, url ...string) error {
 		return err
 	}
 	i2pBrowser.BrowseUsability(url...)
+	i2pBrowser.Stop()
 	return nil
 }
 
@@ -34,5 +36,6 @@ func BrowseApp(profileDir string, url ...string) error {
 		return err
 	}
 	i2pBrowser.BrowseUsability(url...)
+	i2pBrowser.Stop()
 	return nil
 }
