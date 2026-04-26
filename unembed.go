@@ -1,7 +1,6 @@
 package goi2pbrowser
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -16,6 +15,14 @@ func existsAlready(profileDir string) bool {
 	return false
 }
 
+func baseProfilePath(profileDir string) string {
+	return filepath.Join(profileDir, "i2p.firefox.base.profile")
+}
+
+func usabilityProfilePath(profileDir string) string {
+	return filepath.Join(profileDir, "i2p.firefox.usability.profile")
+}
+
 // UnpackBase unpacks a "Strict" mode profile into the "profileDir" and returns the
 // path to the profile and possibly, an error if something goes wrong. If everything
 // works, the error will be nil.
@@ -23,19 +30,23 @@ func existsAlready(profileDir string) bool {
 // Note: a ZIP archive is written to the parent directory of profileDir as a side
 // effect and is not removed after extraction.
 func UnpackBase(profileDir string) (string, error) {
-	log.Println(profileDir, "exists already")
+	profilePath := baseProfilePath(profileDir)
+	if existsAlready(profilePath) {
+		log.Println(profilePath, "exists already")
+		return profilePath, nil
+	}
 	os.MkdirAll(filepath.Dir(profileDir), 0o755)
 	zipFile := filepath.Join(filepath.Dir(profileDir), "i2p.firefox.base.profile.zip")
-	err := ioutil.WriteFile(zipFile, BaseProfile, 0o644)
+	err := os.WriteFile(zipFile, BaseProfile, 0o644)
 	if err != nil {
-		return filepath.Join(profileDir, "i2p.firefox.base.profile"), err
+		return profilePath, err
 	}
 	uz := unzip.New()
 	_, err = uz.Extract(zipFile, profileDir)
 	if err != nil {
-		return filepath.Join(profileDir, "i2p.firefox.base.profile"), err
+		return profilePath, err
 	}
-	return filepath.Join(profileDir, "i2p.firefox.base.profile"), nil
+	return profilePath, nil
 }
 
 // UnpackUsability unpacks a "Usability" mode profile into the "profileDir" and returns the
@@ -45,17 +56,21 @@ func UnpackBase(profileDir string) (string, error) {
 // Note: a ZIP archive is written to the parent directory of profileDir as a side
 // effect and is not removed after extraction.
 func UnpackUsability(profileDir string) (string, error) {
-	log.Println(profileDir, "exists already")
+	profilePath := usabilityProfilePath(profileDir)
+	if existsAlready(profilePath) {
+		log.Println(profilePath, "exists already")
+		return profilePath, nil
+	}
 	os.MkdirAll(filepath.Dir(profileDir), 0o755)
 	zipFile := filepath.Join(filepath.Dir(profileDir), "i2p.firefox.usability.profile.zip")
-	err := ioutil.WriteFile(zipFile, UsabilityProfile, 0o644)
+	err := os.WriteFile(zipFile, UsabilityProfile, 0o644)
 	if err != nil {
-		return filepath.Join(profileDir, "i2p.firefox.usability.profile"), err
+		return profilePath, err
 	}
 	uz := unzip.New()
 	_, err = uz.Extract(zipFile, profileDir)
 	if err != nil {
-		return filepath.Join(profileDir, "i2p.firefox.usability.profile"), err
+		return profilePath, err
 	}
-	return filepath.Join(profileDir, "i2p.firefox.usability.profile"), nil
+	return profilePath, nil
 }

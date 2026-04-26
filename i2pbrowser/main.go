@@ -39,14 +39,20 @@ func main() {
 	}
 	application := *a
 	if application {
-		goi2pbrowser.BrowseApp(*d, url)
+		if err := goi2pbrowser.BrowseApp(*d, url); err != nil {
+			log.Fatal(err)
+		}
 		return
 	}
 	usability := *u
+	var err error
 	switch usability {
 	case true:
-		goi2pbrowser.BrowseUsability(*d, url)
+		err = goi2pbrowser.BrowseUsability(*d, url)
 	default:
-		goi2pbrowser.BrowseStrict(*d, url)
+		err = goi2pbrowser.BrowseStrict(*d, url)
+	}
+	if err != nil {
+		log.Fatal(err)
 	}
 }

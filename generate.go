@@ -7,7 +7,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -69,11 +68,11 @@ func DownloadFile(URL, output string) (string, error) {
 	}
 	defer resp.Body.Close()
 	defer io.Copy(io.Discard, resp.Body) // drain before close for connection reuse
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return filePath, err
 	}
-	err = ioutil.WriteFile(filePath, bodyBytes, 0o644)
+	err = os.WriteFile(filePath, bodyBytes, 0o644)
 	if err != nil {
 		return filePath, err
 	}

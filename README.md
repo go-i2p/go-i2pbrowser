@@ -23,21 +23,21 @@ var UsabilityProfile []byte
 
 ### func [BrowseApp](/run.go#L53)
 
-`func BrowseApp(profileDir string, url ...string)`
+`func BrowseApp(profileDir string, url ...string) error`
 
 BrowseApp launches a Firefox browser configured to use I2P and waits for it to exit.
 The profile is in "Usability" mode
 
 ### func [BrowseStrict](/run.go#L15)
 
-`func BrowseStrict(profileDir string, url ...string)`
+`func BrowseStrict(profileDir string, url ...string) error`
 
 BrowseStrict launches a Firefox browser configured to use I2P and waits for it to exit.
 The profile is in "Strict" mode
 
 ### func [BrowseUsability](/run.go#L34)
 
-`func BrowseUsability(profileDir string, url ...string)`
+`func BrowseUsability(profileDir string, url ...string) error`
 
 BrowseUsability launches a Firefox browser configured to use I2P and waits for it to exit.
 The profile is in "Usability" mode

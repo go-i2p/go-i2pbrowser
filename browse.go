@@ -8,51 +8,54 @@ import (
 
 // BrowseStrict launches a Firefox browser configured to use I2P and waits for it to exit.
 // The profile is in "Strict" mode
-func (i *I2PBrowser) BrowseStrict(url ...string) {
+func (i *I2PBrowser) BrowseStrict(url ...string) error {
 	profilePath, err := UnpackBase(i.ProfileDir)
 	if err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 	FIREFOX, ERROR := fcw.BasicFirefox(profilePath, false, url...)
 	if ERROR != nil {
 		log.Println(ERROR)
-		return
+		return ERROR
 	}
 	defer FIREFOX.Close()
 	<-FIREFOX.Done()
+	return nil
 }
 
 // BrowseUsability launches a Firefox browser configured to use I2P and waits for it to exit.
 // The profile is in "Usability" mode
-func (i *I2PBrowser) BrowseUsability(url ...string) {
+func (i *I2PBrowser) BrowseUsability(url ...string) error {
 	profilePath, err := UnpackUsability(i.ProfileDir)
 	if err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 	FIREFOX, ERROR := fcw.BasicFirefox(profilePath, false, url...)
 	if ERROR != nil {
 		log.Println(ERROR)
-		return
+		return ERROR
 	}
 	defer FIREFOX.Close()
 	<-FIREFOX.Done()
+	return nil
 }
 
 // BrowseApp launches a Firefox browser configured to use I2P and waits for it to exit.
 // The profile is in "Usability" mode
-func (i *I2PBrowser) BrowseApp(url ...string) {
+func (i *I2PBrowser) BrowseApp(url ...string) error {
 	profilePath, err := UnpackUsability(i.ProfileDir)
 	if err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 	FIREFOX, ERROR := fcw.WebAppFirefox(profilePath, false, true, url...)
 	if ERROR != nil {
 		log.Println(ERROR)
-		return
+		return ERROR
 	}
 	defer FIREFOX.Close()
 	<-FIREFOX.Done()
+	return nil
 }
