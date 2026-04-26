@@ -18,7 +18,10 @@ func existsAlready(profileDir string) bool {
 
 // UnpackBase unpacks a "Strict" mode profile into the "profileDir" and returns the
 // path to the profile and possibly, an error if something goes wrong. If everything
-// works, the error will be nil
+// works, the error will be nil.
+//
+// Note: a ZIP archive is written to the parent directory of profileDir as a side
+// effect and is not removed after extraction.
 func UnpackBase(profileDir string) (string, error) {
 	log.Println(profileDir, "exists already")
 	os.MkdirAll(filepath.Dir(profileDir), 0o755)
@@ -37,7 +40,10 @@ func UnpackBase(profileDir string) (string, error) {
 
 // UnpackUsability unpacks a "Usability" mode profile into the "profileDir" and returns the
 // path to the profile and possibly, an error if something goes wrong. If everything
-// works, the error will be nil
+// works, the error will be nil.
+//
+// Note: a ZIP archive is written to the parent directory of profileDir as a side
+// effect and is not removed after extraction.
 func UnpackUsability(profileDir string) (string, error) {
 	log.Println(profileDir, "exists already")
 	os.MkdirAll(filepath.Dir(profileDir), 0o755)
