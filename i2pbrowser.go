@@ -1,6 +1,7 @@
 package goi2pbrowser
 
 import (
+	"log"
 	"net"
 
 	"github.com/go-i2p/go-i2ptunnel-config/i2pconv"
@@ -25,20 +26,21 @@ func (i *I2PBrowser) Start() error {
 	}
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
-		// proceed anyway in this case, it means that I2P is already running and the tunnel is already running, so we can just return nil
+		// Port is occupied — assume I2P is already running, but warn that the
+		// assumption may be wrong (any process holding port 4444 triggers this path).
+		log.Printf("WARNING: port %s is already in use; assuming I2P proxy is running. "+
+			"If I2P is not running, browser traffic may not be routed through I2P.", addr)
 		return nil
 	}
-	ln.Close()
+	if err := ln.Close(); err != nil {
+		log.Printf("WARNING: failed to close probe listener on %s: %v", addr, err)
+	}
 	return i.Tunnel.Start()
 }
 
 func (i *I2PBrowser) Stop() error {
 	// only stop the tunnel if the tunnel is running
-	if i.Tunnel != nil {
-		// check if the tunnel is running before stopping it
-		if i.Tunnel.IsRunning() {
-			return i.Tunnel.Stop()
-		}
+	if i.Tunnel != nil && i.Tunnel.IsRunning() {
 		return i.Tunnel.Stop()
 	}
 	return nil

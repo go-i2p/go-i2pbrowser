@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/google/go-github/github"
@@ -23,10 +24,16 @@ var (
 
 func validVersion(name string) bool {
 	vers := strings.Split(name, ".")
-	if len(vers) == 3 {
-		return true
+	if len(vers) != 3 {
+		return false
 	}
-	return false
+	for _, part := range vers {
+		n, err := strconv.Atoi(part)
+		if err != nil || n < 0 {
+			return false
+		}
+	}
+	return true
 }
 
 func profileVersion() string {
@@ -67,7 +74,6 @@ func DownloadFile(URL, output string) (string, error) {
 		return filePath, err
 	}
 	defer resp.Body.Close()
-	defer io.Copy(io.Discard, resp.Body) // drain before close for connection reuse
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return filePath, err

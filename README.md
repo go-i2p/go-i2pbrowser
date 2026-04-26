@@ -21,28 +21,28 @@ var UsabilityProfile []byte
 
 ## Functions
 
-### func [BrowseApp](/run.go#L53)
+### func [BrowseApp](/run.go#L37)
 
 `func BrowseApp(profileDir string, url ...string) error`
 
 BrowseApp launches a Firefox browser configured to use I2P and waits for it to exit.
-The profile is in "Usability" mode
+The profile is in "Usability" mode with webapp/kiosk-style window.
 
-### func [BrowseStrict](/run.go#L15)
+### func [BrowseStrict](/run.go#L9)
 
 `func BrowseStrict(profileDir string, url ...string) error`
 
 BrowseStrict launches a Firefox browser configured to use I2P and waits for it to exit.
 The profile is in "Strict" mode
 
-### func [BrowseUsability](/run.go#L34)
+### func [BrowseUsability](/run.go#L23)
 
 `func BrowseUsability(profileDir string, url ...string) error`
 
 BrowseUsability launches a Firefox browser configured to use I2P and waits for it to exit.
 The profile is in "Usability" mode
 
-### func [UnpackBase](/unembed.go#L22)
+### func [UnpackBase](/unembed.go#L32)
 
 `func UnpackBase(profileDir string) (string, error)`
 
@@ -50,7 +50,7 @@ UnpackBase unpacks a "Strict" mode profile into the "profileDir" and returns the
 path to the profile and possibly, an error if something goes wrong. If everything
 works, the error will be nil
 
-### func [UnpackUsability](/unembed.go#L41)
+### func [UnpackUsability](/unembed.go#L60)
 
 `func UnpackUsability(profileDir string) (string, error)`
 

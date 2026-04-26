@@ -43,7 +43,7 @@ func (i *I2PBrowser) BrowseUsability(url ...string) error {
 }
 
 // BrowseApp launches a Firefox browser configured to use I2P and waits for it to exit.
-// The profile is in "Usability" mode
+// The profile is in "Usability" mode with webapp/kiosk-style window.
 func (i *I2PBrowser) BrowseApp(url ...string) error {
 	profilePath, err := UnpackUsability(i.ProfileDir)
 	if err != nil {
