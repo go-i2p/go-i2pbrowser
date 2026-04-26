@@ -19,8 +19,7 @@ func (i *I2PBrowser) Start() error {
 		return nil
 	}
 	// also check for a listener on the tunnels configured port before starting the tunnel
-	t := i.Tunnel.Tunnel()
-	addr, err := t.LocalAddress()
+	addr, err := i.Tunnel.Tunnel().LocalAddress()
 	if err != nil {
 		return err
 	}
