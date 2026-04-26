@@ -21,9 +21,9 @@ func existsAlready(profileDir string) bool {
 // works, the error will be nil
 func UnpackBase(profileDir string) (string, error) {
 	log.Println(profileDir, "exists already")
-	os.MkdirAll(filepath.Dir(profileDir), 0755)
+	os.MkdirAll(filepath.Dir(profileDir), 0o755)
 	zipFile := filepath.Join(filepath.Dir(profileDir), "i2p.firefox.base.profile.zip")
-	err := ioutil.WriteFile(zipFile, BaseProfile, 0644)
+	err := ioutil.WriteFile(zipFile, BaseProfile, 0o644)
 	if err != nil {
 		return filepath.Join(profileDir, "i2p.firefox.base.profile"), err
 	}
@@ -40,9 +40,9 @@ func UnpackBase(profileDir string) (string, error) {
 // works, the error will be nil
 func UnpackUsability(profileDir string) (string, error) {
 	log.Println(profileDir, "exists already")
-	os.MkdirAll(filepath.Dir(profileDir), 0755)
+	os.MkdirAll(filepath.Dir(profileDir), 0o755)
 	zipFile := filepath.Join(filepath.Dir(profileDir), "i2p.firefox.usability.profile.zip")
-	err := ioutil.WriteFile(zipFile, UsabilityProfile, 0644)
+	err := ioutil.WriteFile(zipFile, UsabilityProfile, 0o644)
 	if err != nil {
 		return filepath.Join(profileDir, "i2p.firefox.usability.profile"), err
 	}

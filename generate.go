@@ -16,8 +16,10 @@ import (
 	"github.com/google/go-github/github"
 )
 
-var owner = "eyedeekay"
-var repo = "i2p.plugins.firefox"
+var (
+	owner = "eyedeekay"
+	repo  = "i2p.plugins.firefox"
+)
 
 func validVersion(name string) bool {
 	vers := strings.Split(name, ".")
@@ -32,7 +34,7 @@ func profileVersion() string {
 	tags, _, err := client.Repositories.ListTags(context.Background(), owner, repo, nil)
 	if err != nil {
 		fmt.Println(err)
-		return "0.0.34"
+		return "2.8.3"
 	}
 	if len(tags) > 0 {
 		for _, tag := range tags {
@@ -45,7 +47,7 @@ func profileVersion() string {
 	} else {
 		fmt.Printf("No tags yet\n")
 	}
-	return "0.0.36"
+	return "2.8.3"
 }
 
 func DownloadURL(version, mode string) string {
@@ -68,7 +70,7 @@ func DownloadFile(URL, output string) (string, error) {
 	if err != nil {
 		return filePath, err
 	}
-	err = ioutil.WriteFile(filePath, bodyBytes, 0644)
+	err = ioutil.WriteFile(filePath, bodyBytes, 0o644)
 	if err != nil {
 		return filePath, err
 	}
@@ -89,5 +91,4 @@ func main() {
 		panic(err)
 	}
 	log.Println("Downloaded:", usabilityPath)
-
 }
