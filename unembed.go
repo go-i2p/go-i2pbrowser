@@ -9,10 +9,8 @@ import (
 )
 
 func existsAlready(profileDir string) bool {
-	if _, err := os.Stat(filepath.Join(profileDir, "user.js")); err == nil {
-		return true
-	}
-	return false
+	info, err := os.Stat(profileDir)
+	return err == nil && info.IsDir()
 }
 
 func baseProfilePath(profileDir string) string {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 
 	"github.com/go-i2p/go-i2ptunnel-config/i2pconv"
 	embedding "github.com/go-i2p/go-i2ptunnel/lib/embedding"
@@ -78,22 +79,8 @@ func (i *I2PBrowser) Start() error {
 // isAddrInUse reports whether a *net.OpError wraps an "address already in use" error.
 func isAddrInUse(opErr *net.OpError) bool {
 	return opErr != nil && opErr.Op == "listen" &&
-		opErr.Err != nil && (containsSuffix(opErr.Err.Error(), "address already in use") ||
-		containsSuffix(opErr.Err.Error(), "only one usage of each socket"))
-}
-
-// containsSuffix reports whether s contains substr.
-func containsSuffix(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(s) > 0 && stringContains(s, substr))
-}
-
-func stringContains(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
+		opErr.Err != nil && (strings.Contains(opErr.Err.Error(), "address already in use") ||
+		strings.Contains(opErr.Err.Error(), "only one usage of each socket"))
 }
 
 func (i *I2PBrowser) Stop() error {

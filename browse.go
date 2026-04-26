@@ -19,7 +19,11 @@ func (i *I2PBrowser) BrowseStrict(url ...string) error {
 		log.Println(ERROR)
 		return ERROR
 	}
-	defer FIREFOX.Close()
+	defer func() {
+		if err := FIREFOX.Close(); err != nil {
+			log.Printf("WARNING: failed to close Firefox browser: %v", err)
+		}
+	}()
 	<-FIREFOX.Done()
 	return nil
 }
@@ -37,7 +41,11 @@ func (i *I2PBrowser) BrowseUsability(url ...string) error {
 		log.Println(ERROR)
 		return ERROR
 	}
-	defer FIREFOX.Close()
+	defer func() {
+		if err := FIREFOX.Close(); err != nil {
+			log.Printf("WARNING: failed to close Firefox browser: %v", err)
+		}
+	}()
 	<-FIREFOX.Done()
 	return nil
 }
@@ -55,7 +63,11 @@ func (i *I2PBrowser) BrowseApp(url ...string) error {
 		log.Println(ERROR)
 		return ERROR
 	}
-	defer FIREFOX.Close()
+	defer func() {
+		if err := FIREFOX.Close(); err != nil {
+			log.Printf("WARNING: failed to close Firefox browser: %v", err)
+		}
+	}()
 	<-FIREFOX.Done()
 	return nil
 }
